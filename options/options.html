@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>__MSG_optionsPageTitle__</title>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --accent: #5B4FD9;
+      --accent-light: #EEF0FF;
+      --accent-border: #C5BEFF;
+      --bg: #F7F8FC;
+      --surface: #FFFFFF;
+      --border: #E2E5EF;
+      --text: #1A1B2E;
+      --muted: #6B7280;
+      --success: #16A34A;
+      --success-bg: #DCFCE7;
+      --radius: 10px;
+      --shadow: 0 1px 4px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(0, 0, 0, 0.04);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 20px 60px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .header-icon {
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .header-text p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px 24px;
+      margin-bottom: 14px;
+    }
+
+    .card-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .emoji-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+      min-height: 48px;
+    }
+
+    .emoji-chip {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--accent-light);
+      border: 1.5px solid var(--accent-border);
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 20px;
+      cursor: default;
+    }
+
+    .emoji-chip .remove-btn {
+      width: 16px;
+      height: 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      font-size: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .emoji-chip:hover .remove-btn {
+      opacity: 1;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .emoji-input {
+      flex: 1;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 12px;
+      font-size: 16px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .emoji-input:focus {
+      border-color: var(--accent);
+      background: #fff;
+    }
+
+    .btn-add {
+      height: 40px;
+      padding: 0 16px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+
+    .btn-add:hover {
+      opacity: 0.88;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .toggle-info h3 {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .toggle-info p {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 3px;
+      line-height: 1.5;
+    }
+
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 26px;
+      flex-shrink: 0;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      background: var(--border);
+      border-radius: 99px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      transition: transform 0.2s;
+    }
+
+    .toggle input:checked+.toggle-track {
+      background: var(--accent);
+    }
+
+    .toggle input:checked+.toggle-track::after {
+      transform: translateX(18px);
+    }
+
+    .color-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .color-picker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      height: 38px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      padding: 0 10px;
+      cursor: pointer;
+    }
+
+    .color-picker-wrap input[type="color"] {
+      width: 22px;
+      height: 22px;
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .color-hex {
+      font-size: 13px;
+      font-family: monospace;
+      color: var(--text);
+      flex: 1;
+      border: none;
+      background: none;
+      outline: none;
+      width: 72px;
+    }
+
+    .border-style-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .style-btn {
+      flex: 1;
+      height: 38px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      font-size: 12px;
+      color: var(--muted);
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .style-btn.active {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+
+    .emoji-size-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .emoji-size-row label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .emoji-size-row input[type="range"] {
+      flex: 1;
+      accent-color: var(--accent);
+    }
+
+    .emoji-size-row .size-val {
+      font-size: 13px;
+      font-weight: 600;
+      min-width: 32px;
+      text-align: right;
+    }
+
+    .preview-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .preview-email-shell {
+      background: #F0F2F8;
+      border-radius: 8px;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+    }
+
+    .preview-email-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    #livePreview {
+      display: inline-block;
+    }
+
+    .preview-quoted {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      border-left: 3px solid var(--border);
+      padding-left: 10px;
+      white-space: pre-line;
+    }
+
+    .save-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: 4px;
+    }
+
+    .btn-save {
+      height: 42px;
+      padding: 0 28px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .btn-save:hover {
+      opacity: 0.88;
+    }
+
+    .btn-save:active {
+      transform: scale(0.98);
+    }
+
+    #status {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--success);
+      background: var(--success-bg);
+      border-radius: 6px;
+      padding: 6px 12px;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+
+    #status.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="header">
+      <img src="../images/icon.svg" class="header-icon" alt="Quick React">
+      <div class="header-text">
+        <h1>__MSG_extensionName__</h1>
+        <p>__MSG_optionsSubtitle__</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label" data-i18n="sectionReactions"></div>
+      <div class="emoji-grid" id="emojiGrid"></div>
+      <div class="input-row">
+        <input type="text" id="emojiInput" class="emoji-input" maxlength="8">
+        <button class="btn-add" id="addBtn" data-i18n="addEmojiBtn"></button>
+      </div>
+      <p class="hint" data-i18n="removeEmojiHint"></p>
+    </div>
+
+    <div class="card">
+      <div class="toggle-row">
+        <div class="toggle-info">
+          <h3 data-i18n="sectionAutoSend"></h3>
+          <p data-i18n="autoSendDescription"></p>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="autoSend">
+          <span class="toggle-track"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label" data-i18n="sectionAppearance"></div>
+
+      <div class="color-row">
+        <div class="field-group">
+          <label data-i18n="labelAccentColor"></label>
+          <div class="color-picker-wrap">
+            <input type="color" id="accentColor" value="#5B4FD9">
+            <input type="text" class="color-hex" id="accentHex" value="#5B4FD9" maxlength="7">
+          </div>
+        </div>
+        <div class="field-group">
+          <label data-i18n="labelBgColor"></label>
+          <div class="color-picker-wrap">
+            <input type="color" id="bgColor" value="#F4F3FF">
+            <input type="text" class="color-hex" id="bgHex" value="#F4F3FF" maxlength="7">
+          </div>
+        </div>
+      </div>
+
+      <div class="field-group" style="margin-bottom:0">
+        <label data-i18n="labelBorderStyle"></label>
+        <div class="border-style-group">
+          <button class="style-btn active" data-style="left" data-i18n="borderLeft"></button>
+          <button class="style-btn" data-style="full" data-i18n="borderFull"></button>
+          <button class="style-btn" data-style="bubble" data-i18n="borderBubble"></button>
+        </div>
+      </div>
+
+      <div class="emoji-size-row">
+        <label data-i18n="labelEmojiSize"></label>
+        <input type="range" id="emojiSize" min="20" max="56" step="4" value="32">
+        <span class="size-val" id="emojiSizeVal">32px</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="preview-label" data-i18n="sectionPreview"></div>
+      <div class="preview-email-shell">
+        <div class="preview-email-meta" data-i18n="previewTo"></div>
+        <div id="livePreview"></div>
+        <div class="preview-quoted" data-i18n="previewQuote"></div>
+      </div>
+    </div>
+
+    <div class="save-row">
+      <button class="btn-save" id="saveBtn" data-i18n="saveBtn"></button>
+      <span id="status" data-i18n="saveConfirm"></span>
+    </div>
+
+  </div>
+  <script src="options.js"></script>
+</body>
+
+</html>
