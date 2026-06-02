@@ -1,0 +1,88 @@
+{
+  "extensionName": {
+    "message": "Réaction Rapide"
+  },
+  "extensionDescription": {
+    "message": "Répondez à un e-mail avec une réaction rapide."
+  },
+  "buttonTitle": {
+    "message": "Réagir"
+  },
+  "reactMessage": {
+    "message": "a réagi :"
+  },
+  "optionsSubtitle": {
+    "message": "Paramètres de l'extension"
+  },
+  "optionsPageTitle": {
+    "message": "Réaction Rapide — Paramètres"
+  },
+  "sectionReactions": {
+    "message": "Réactions disponibles"
+  },
+  "addEmojiPlaceholder": {
+    "message": "Ajouter un emoji…"
+  },
+  "addEmojiBtn": {
+    "message": "+ Ajouter"
+  },
+  "removeEmojiHint": {
+    "message": "Survolez un emoji puis cliquez ✕ pour le supprimer"
+  },
+  "removeEmojiLabel": {
+    "message": "Supprimer $EMOJI$",
+    "placeholders": {
+      "emoji": {
+        "content": "$1"
+      }
+    }
+  },
+  "sectionAutoSend": {
+    "message": "Envoi automatique"
+  },
+  "autoSendDescription": {
+    "message": "Envoie la réaction sans afficher la fenêtre de composition"
+  },
+  "sectionAppearance": {
+    "message": "Apparence du bloc réaction"
+  },
+  "labelAccentColor": {
+    "message": "Couleur d'accent"
+  },
+  "labelBgColor": {
+    "message": "Couleur de fond"
+  },
+  "labelBorderStyle": {
+    "message": "Style de bordure"
+  },
+  "borderLeft": {
+    "message": "▌ Gauche"
+  },
+  "borderFull": {
+    "message": "□ Complète"
+  },
+  "borderBubble": {
+    "message": "◯ Bulle"
+  },
+  "labelEmojiSize": {
+    "message": "Taille de l'emoji"
+  },
+  "sectionPreview": {
+    "message": "Aperçu en temps réel"
+  },
+  "previewTo": {
+    "message": "À : alice@exemple.fr · Rép : Réunion de demain"
+  },
+  "previewSenderName": {
+    "message": "Jean Dupont"
+  },
+  "previewQuote": {
+    "message": "De : Alice Martin\nBonjour, confirmes-tu ta présence pour la réunion de demain à 14h ?"
+  },
+  "saveBtn": {
+    "message": "Enregistrer"
+  },
+  "saveConfirm": {
+    "message": "✓ Paramètres sauvegardés"
+  }
+}
