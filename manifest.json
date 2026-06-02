@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "1.0",
+  "default_locale": "en",
+  "author": "Grafics",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "react-mail@grafics.fr",
+      "strict_min_version": "128.0"
+    }
+  },
+  "permissions": [
+    "messagesRead",
+    "accountsRead",
+    "compose",
+    "compose.send",
+    "storage"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "message_display_action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/icon.svg",
+    "default_title": "__MSG_buttonTitle__"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "48": "images/icon.svg"
+  }
+}
