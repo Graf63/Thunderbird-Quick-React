@@ -1,0 +1,88 @@
+{
+  "extensionName": {
+    "message": "Quick React"
+  },
+  "extensionDescription": {
+    "message": "Reply to an email with a quick reaction."
+  },
+  "buttonTitle": {
+    "message": "React"
+  },
+  "reactMessage": {
+    "message": "reacted:"
+  },
+  "optionsSubtitle": {
+    "message": "Extension settings"
+  },
+  "optionsPageTitle": {
+    "message": "Quick React — Settings"
+  },
+  "sectionReactions": {
+    "message": "Available reactions"
+  },
+  "addEmojiPlaceholder": {
+    "message": "Add an emoji…"
+  },
+  "addEmojiBtn": {
+    "message": "+ Add"
+  },
+  "removeEmojiHint": {
+    "message": "Hover an emoji and click ✕ to remove it"
+  },
+  "removeEmojiLabel": {
+    "message": "Remove $EMOJI$",
+    "placeholders": {
+      "emoji": {
+        "content": "$1"
+      }
+    }
+  },
+  "sectionAutoSend": {
+    "message": "Auto-send"
+  },
+  "autoSendDescription": {
+    "message": "Send the reaction without opening the compose window"
+  },
+  "sectionAppearance": {
+    "message": "Reaction block appearance"
+  },
+  "labelAccentColor": {
+    "message": "Accent color"
+  },
+  "labelBgColor": {
+    "message": "Background color"
+  },
+  "labelBorderStyle": {
+    "message": "Border style"
+  },
+  "borderLeft": {
+    "message": "▌ Left"
+  },
+  "borderFull": {
+    "message": "□ Full"
+  },
+  "borderBubble": {
+    "message": "◯ Bubble"
+  },
+  "labelEmojiSize": {
+    "message": "Emoji size"
+  },
+  "sectionPreview": {
+    "message": "Live preview"
+  },
+  "previewTo": {
+    "message": "To: alice@example.com · Re: Tomorrow's meeting"
+  },
+  "previewSenderName": {
+    "message": "John Smith"
+  },
+  "previewQuote": {
+    "message": "From: Alice Martin\nCan you confirm your attendance for tomorrow's meeting at 2pm?"
+  },
+  "saveBtn": {
+    "message": "Save"
+  },
+  "saveConfirm": {
+    "message": "✓ Settings saved"
+  }
+}
