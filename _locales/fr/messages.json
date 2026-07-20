@@ -1,6 +1,6 @@
 {
   "extensionName": {
-    "message": "Réaction Rapide"
+    "message": "Quick React"
   },
   "extensionDescription": {
     "message": "Répondez à un e-mail avec une réaction rapide."
@@ -15,13 +15,13 @@
     "message": "Paramètres de l'extension"
   },
   "optionsPageTitle": {
-    "message": "Réaction Rapide — Paramètres"
+    "message": "Réaction Rapide - Paramètres"
   },
   "sectionReactions": {
     "message": "Réactions disponibles"
   },
   "addEmojiPlaceholder": {
-    "message": "Ajouter un emoji…"
+    "message": "Ajouter un emoji..."
   },
   "addEmojiBtn": {
     "message": "+ Ajouter"
@@ -36,6 +36,9 @@
         "content": "$1"
       }
     }
+  },
+  "replyAll": {
+    "message": "Répondre à tous"
   },
   "sectionAutoSend": {
     "message": "Envoi automatique"
