@@ -10,41 +10,49 @@ messenger.runtime.onMessage.addListener((request) => {
       if (!message) return;
 
       const account = await messenger.accounts.get(message.folder.accountId);
-      const { name, email } = account?.identities?.[0] ?? {};
+      const { name, email, id: identityId } = account?.identities?.[0] ?? {};
 
-      const composeTab = await messenger.compose.beginReply(message.id, "replyToSender");
+      // Détermine dynamiquement le type de réponse
+      const replyType = request.replyAll ? "replyToAll" : "replyToSender";
+
+      const composeTab = await messenger.compose.beginReply(
+        message.id,
+        replyType,
+        identityId ? { identityId } : {}
+      );
+
       const { body } = await messenger.compose.getComposeDetails(composeTab.id);
 
-      // i18n: use the locale key; empty string fallback (never hardcode a language)
       const i18nReact = messenger.i18n.getMessage("reactMessage") || "";
       const displayName = name ?? email ?? '';
 
-      // Load customisation settings with sensible defaults
       const {
         accentColor = "#5B4FD9",
         bgColor = "#F4F3FF",
         borderStyle = "left",
         emojiSize = "32",
+        autoSend = false
       } = await messenger.storage.local.get([
-        "accentColor", "bgColor", "borderStyle", "emojiSize"
+        "accentColor", "bgColor", "borderStyle", "emojiSize", "autoSend"
       ]);
 
       let tableStyle = `border-radius:8px; padding:14px 18px; display:inline-block; max-width:420px; background:${bgColor};`;
-      if (borderStyle === "left") tableStyle += ` border-left:4px solid ${accentColor};`;
-      if (borderStyle === "full") tableStyle += ` border:2px solid ${accentColor};`;
-      if (borderStyle === "bubble") tableStyle += ` border-radius:18px; border:2px solid ${accentColor};`;
+      borderStyle === "left" && (tableStyle += ` border-left:4px solid ${accentColor};`);
+      borderStyle === "full" && (tableStyle += ` border:2px solid ${accentColor};`);
+      borderStyle === "bubble" && (tableStyle += ` border-radius:18px; border:2px solid ${accentColor};`);
 
-      const reactionBlock = `
+      // 1. Structure HTML strictement statique (aucune variable dynamique)
+      const staticHTML = `
 <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 18px 0;">
   <tr>
     <td style="padding:0;">
-      <table cellpadding="0" cellspacing="0" border="0" style="${tableStyle}">
+      <table id="react-inner" cellpadding="0" cellspacing="0" border="0">
         <tr>
           <td>
             <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif; font-size:13px; color:#6B7280; margin:0 0 8px 0;">
-              <strong style="color:#1A1B2E;">${displayName}</strong> ${i18nReact}
+              <strong id="react-name" style="color:#1A1B2E;"></strong><span id="react-msg"></span>
             </div>
-            <div style="font-size:${emojiSize}px; line-height:1.2;">${request.reaction}</div>
+            <div id="react-emoji" style="line-height:1.2;"></div>
           </td>
         </tr>
       </table>
@@ -52,11 +60,23 @@ messenger.runtime.onMessage.addListener((request) => {
   </tr>
 </table>`.trim();
 
-      await messenger.compose.setComposeDetails(composeTab.id, {
-        body: `${reactionBlock}${body}`
-      });
+      const parser = new DOMParser();
+      const reactDoc = parser.parseFromString(staticHTML, "text/html");
 
-      const { autoSend = true } = await messenger.storage.local.get("autoSend");
+      // 2. Injection sécurisée des variables via l'API DOM
+      reactDoc.getElementById("react-inner").setAttribute("style", tableStyle);
+      reactDoc.getElementById("react-name").textContent = displayName;
+      reactDoc.getElementById("react-msg").textContent = ` ${i18nReact}`;
+      reactDoc.getElementById("react-emoji").setAttribute("style", `font-size:${emojiSize}px; line-height:1.2;`);
+      reactDoc.getElementById("react-emoji").textContent = request.reaction;
+
+      // 3. Insertion du bloc dans le corps de l'email
+      const doc = parser.parseFromString(body, "text/html");
+      doc.body.prepend(reactDoc.body.firstChild);
+
+      await messenger.compose.setComposeDetails(composeTab.id, {
+        body: `<!DOCTYPE html>${doc.documentElement.outerHTML}`
+      });
 
       if (autoSend) {
         await new Promise(r => setTimeout(r, 500));
