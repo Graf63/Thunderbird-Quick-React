@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const emojiSizeVal = document.getElementById('emojiSizeVal');
   const livePreview = document.getElementById('livePreview');
 
-  autoSendCb.checked = stored.autoSend ?? true;
+  autoSendCb.checked = stored.autoSend ?? false;
 
   const initAccent = stored.accentColor ?? "#5B4FD9";
   const initBg = stored.bgColor ?? "#F4F3FF";
