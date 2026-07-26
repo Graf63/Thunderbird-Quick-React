@@ -3,19 +3,25 @@ document.addEventListener('DOMContentLoaded', async () => {
     el.textContent = messenger.i18n.getMessage(el.dataset.i18n) || el.textContent;
   });
 
-  const { emojis = "👍 🙃 😀 ❤️ 👌 🙏" } = await messenger.storage.local.get("emojis");
+  const { emojis = "👍 🙃 😀 ❤️ 👌 🙏", defaultReplyAll = false, defaultSignature = true } = await messenger.storage.local.get(["emojis", "defaultReplyAll", "defaultSignature"]);
+
   const container = document.getElementById('container');
-  const replyAllContainer = document.getElementById('replyAllContainer');
+  const replyAllWrapper = document.getElementById('replyAllWrapper');
   const replyAllCb = document.getElementById('replyAllCb');
+  const signatureCb = document.getElementById('signatureCb');
+
+  replyAllCb.checked = defaultReplyAll;
+  signatureCb.checked = defaultSignature;
 
   try {
     const [{ id: tabId }] = await messenger.tabs.query({ active: true, currentWindow: true });
+
+    // Correction de l'API pour Thunderbird >= 115
     const displayed = await messenger.messageDisplay.getDisplayedMessages(tabId);
     const message = displayed?.messages?.[0] ?? displayed?.[0];
 
-    // Afficher l'option uniquement s'il y a plus d'un destinataire (To + Cc)
     if (message && ((message.recipients?.length ?? 0) + (message.ccList?.length ?? 0) > 1)) {
-      replyAllContainer.style.display = 'block';
+      replyAllWrapper.style.display = 'flex';
     }
   } catch (error) {
     console.error(error);
@@ -28,10 +34,11 @@ document.addEventListener('DOMContentLoaded', async () => {
       messenger.runtime.sendMessage({
         action: "sendReaction",
         reaction: emoji,
-        replyAll: replyAllCb.checked
+        replyAll: replyAllCb.checked,
+        includeSignature: signatureCb.checked
       }).catch(() => { });
       window.close();
     };
-    container.appendChild(btn);
+    container.append(btn);
   });
 });
