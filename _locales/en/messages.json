@@ -15,13 +15,13 @@
     "message": "Extension settings"
   },
   "optionsPageTitle": {
-    "message": "Quick React — Settings"
+    "message": "Quick React - Settings"
   },
   "sectionReactions": {
     "message": "Available reactions"
   },
   "addEmojiPlaceholder": {
-    "message": "Add an emoji…"
+    "message": "Add an emoji..."
   },
   "addEmojiBtn": {
     "message": "+ Add"
@@ -37,6 +37,9 @@
       }
     }
   },
+  "replyAll": {
+    "message": "Reply all"
+  },
   "sectionAutoSend": {
     "message": "Auto-send"
   },
@@ -45,6 +48,15 @@
   },
   "sectionAppearance": {
     "message": "Reaction block appearance"
+  },
+  "sectionDefaultReplyAll": {
+    "message": "Reply all by default"
+  },
+  "sectionDefaultSignature": {
+    "message": "Include the signature"
+  },
+  "includeSignature": {
+    "message": "Avec signature"
   },
   "labelAccentColor": {
     "message": "Accent color"
