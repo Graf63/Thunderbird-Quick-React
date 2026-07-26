@@ -72,6 +72,7 @@ messenger.runtime.onMessage.addListener((request) => {
 
       // 3. Insertion du bloc dans le corps de l'email
       const doc = parser.parseFromString(body, "text/html");
+      !request.includeSignature && doc.querySelector('.moz-signature')?.remove();
       doc.body.prepend(reactDoc.body.firstChild);
 
       await messenger.compose.setComposeDetails(composeTab.id, {
