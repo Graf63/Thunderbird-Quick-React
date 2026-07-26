@@ -49,6 +49,15 @@
   "sectionAppearance": {
     "message": "Apparence du bloc réaction"
   },
+  "sectionDefaultReplyAll": {
+    "message": "Répondre à tous par défaut"
+  },
+  "sectionDefaultSignature": {
+    "message": "Inclure la signature par défaut"
+  },
+  "includeSignature": {
+    "message": "Avec signature"
+  },
   "labelAccentColor": {
     "message": "Couleur d'accent"
   },
